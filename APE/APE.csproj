@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetName>APE</TargetName>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<PublishSingleFile>true</PublishSingleFile>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<SelfContained>true</SelfContained>
+		<LangVersion>7.3</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="HarmonyX" Version="2.13.0" GeneratePathProperty="true">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="ILRepack" Version="2.0.34" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>~\Desktop\VNyan\VNyan_Data\Managed\Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+		  <HintPath>~\Desktop\VNyan\VNyan_Data\Managed\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Memory">
+		  <HintPath>~\Desktop\VNyan\VNyan_Data\Managed\System.Memory.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine">
+		  <HintPath>~\Desktop\VNyan\VNyan_Data\Managed\UnityEngine.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AssetBundleModule">
+		  <HintPath>~\Desktop\VNyan\VNyan_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>~\Desktop\VNyan\VNyan_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UI">
+			<HintPath>~\Desktop\VNyan\VNyan_Data\Managed\UnityEngine.UI.dll</HintPath>
+		</Reference>
+		<Reference Include="VNyanInterface">
+			<HintPath>~\Desktop\VNyan\VNyan_Data\Managed\VNyanInterface.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<Target Name="ILRepack" AfterTargets="Build">
+		<Exec Command="$(ILRepack) bin\Release\netstandard2.0\APE.dll /lib:bin\Release\netstandard2.0 /out:APE.dll ^&#xD;&#xA;			  bin\Release\netstandard2.0\0Harmony.dll ^&#xD;&#xA;			  bin\Release\netstandard2.0\MonoMod.RuntimeDetour.dll ^&#xD;&#xA;			  bin\Release\netstandard2.0\MonoMod.Backports.dll ^&#xD;&#xA;			  bin\Release\netstandard2.0\MonoMod.ILHelpers.dll ^&#xD;&#xA;			  bin\Release\netstandard2.0\MonoMod.Utils.dll ^&#xD;&#xA;			  bin\Release\netstandard2.0\MonoMod.Core.dll ^&#xD;&#xA;			  bin\Release\netstandard2.0\System.Reflection.Emit.ILGeneration.dll ^&#xD;&#xA;			  bin\Release\netstandard2.0\System.Reflection.Emit.Lightweight.dll ^&#xD;&#xA;			  bin\Release\netstandard2.0\Mono.Cecil.dll" />
+	</Target>
+</Project>

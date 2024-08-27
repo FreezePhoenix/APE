@@ -1,0 +1,6 @@
+Libs/**
+APE/bin
+APE/obj
+**.dll
+**.pdb
+**.user
