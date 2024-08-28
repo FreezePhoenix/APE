@@ -22,35 +22,38 @@ namespace APE {
         public void Invoke(T value) => Action?.Invoke(value);
     }
     public class APE : MonoBehaviour, VNyanInterface.IButtonClickedHandler {
-        static readonly Dictionary<string, Dictionary<string, string>> DictionaryParams = Traverse.Create(ParamSystem.getInstance()).Field("paramDictionary").GetValue<Dictionary<string, Dictionary<string, string>>>();
-        static readonly Dictionary<string, List<string>> TArrayParams = Traverse.Create(ParamSystem.getInstance()).Field("paramStringArray").GetValue<Dictionary<string, List<string>>>();
+        static Dictionary<string, Dictionary<string, string>> DictionaryParams;
+        static Dictionary<string, List<string>> TArrayParams;
         static Dictionary<string, float> NumParams;
         static Dictionary<string, string> StringParams;
-        static readonly Dictionary<string, ActionWrapper<CKHLPKKNCBC>> TriggerChannels = new Dictionary<string, ActionWrapper<CKHLPKKNCBC>>(StringComparer.OrdinalIgnoreCase);
-        public static ActionWrapper<CKHLPKKNCBC> GetActionWrapper(string name) {
-            if (!TriggerChannels.TryGetValue(name, out ActionWrapper<CKHLPKKNCBC> wrapper)) {
-                TriggerChannels.Add(name, wrapper = new ActionWrapper<CKHLPKKNCBC>());
+        static Dictionary<string, LEKNLMJJGED> Timers;
+        static readonly Dictionary<string, ActionWrapper<OCEONADJDLM>> TriggerChannels = new Dictionary<string, ActionWrapper<OCEONADJDLM>>(StringComparer.OrdinalIgnoreCase);
+        public static ActionWrapper<OCEONADJDLM> GetActionWrapper(string name) {
+            if (!TriggerChannels.TryGetValue(name, out ActionWrapper<OCEONADJDLM> wrapper)) {
+                TriggerChannels.Add(name, wrapper = new ActionWrapper<OCEONADJDLM>());
             }
             return wrapper;
         }
-        public static void AddActionWrapper(string name, Action<CKHLPKKNCBC> action) {
-            if (!TriggerChannels.TryGetValue(name, out ActionWrapper<CKHLPKKNCBC> wrapper)) {
-                TriggerChannels.Add(name, wrapper = new ActionWrapper<CKHLPKKNCBC>());
+        public static void AddActionWrapper(string name, Action<OCEONADJDLM> action) {
+            if (!TriggerChannels.TryGetValue(name, out ActionWrapper<OCEONADJDLM> wrapper)) {
+                TriggerChannels.Add(name, wrapper = new ActionWrapper<OCEONADJDLM>());
             }
             wrapper.Add(action);
         }
-        public static void RemoveActionWrapper(string name, Action<CKHLPKKNCBC> action) {
-            if (TriggerChannels.TryGetValue(name, out ActionWrapper<CKHLPKKNCBC> wrapper)) {
+        public static void RemoveActionWrapper(string name, Action<OCEONADJDLM> action) {
+            if (TriggerChannels.TryGetValue(name, out ActionWrapper<OCEONADJDLM> wrapper)) {
                 wrapper.Remove(action);
             }
         }
         public void Awake() {
             try {
-                var ParamNumberField = Traverse.Create(ParamSystem.getInstance()).Field("paramInt");
-                ParamNumberField.SetValue(NumParams = new Dictionary<string, float>(ParamNumberField.GetValue<Dictionary<string, float>>(), StringComparer.OrdinalIgnoreCase));
-                var ParamStringField = Traverse.Create(ParamSystem.getInstance()).Field("paramString");
-                ParamStringField.SetValue(StringParams = new Dictionary<string, string>(ParamStringField.GetValue<Dictionary<string, string>>(), StringComparer.OrdinalIgnoreCase));
-                TimerSystem.getInstance().timers = new Dictionary<string, KJJCCCDGKFK>(TimerSystem.getInstance().timers, StringComparer.OrdinalIgnoreCase);
+                var ParamTraverse = Traverse.Create(ParamSystem.getInstance());
+                DictionaryParams = ParamTraverse.Field("DLCKJNHBNIB").GetValue<Dictionary<string, Dictionary<string, string>>>();
+                TArrayParams = ParamTraverse.Field("ODOPIMCAPOK").GetValue<Dictionary<string, List<string>>>();
+                NumParams = ParamTraverse.Field("HKKDLJBILOE").GetValue<Dictionary<string, float>>();
+                StringParams = ParamTraverse.Field("MOELGFIKMJI").GetValue<Dictionary<string, string>>();
+                var TimerField = Traverse.Create(TimerSystem.getInstance()).Field("KPFCLPCENJI");
+                TimerField.SetValue(Timers = new Dictionary<string, LEKNLMJJGED>(TimerField.GetValue<Dictionary<string, LEKNLMJJGED>>(), StringComparer.OrdinalIgnoreCase));
                 Harmony.CreateAndPatchAll(typeof(TriggerSystemPatches));
                 Harmony.CreateAndPatchAll(typeof(TriggerNodePatches));
                 Harmony.CreateAndPatchAll(typeof(SplitTParamNodePatches));
@@ -61,7 +64,7 @@ namespace APE {
                 Harmony.CreateAndPatchAll(typeof(UnpackDictionaryNodePatches));
                 Harmony.CreateAndPatchAll(typeof(SetTArrayNodePatches));
                 Harmony.CreateAndPatchAll(typeof(TextSubstringNodePatches));
-            } catch(Exception e) {
+            } catch (Exception e) {
                 FileLog.Log(e.ToString());
             }
             VNyanInterface.VNyanInterface.VNyanUI.registerPluginButton("Aria's Performance Enhancements (APE)", this);
@@ -83,65 +86,70 @@ namespace APE {
                 var customComponent = __instance.gameObject.AddComponent<CacheActionComponent>();
                 __instance.triggerName.onValueChanged.AddListener(newValue => customComponent.value = GetActionWrapper(newValue));
             }
-            [HarmonyPatch("IHCGBFELBLL")]
+            [HarmonyPatch("OBHKFAJCAIJ")]
             [HarmonyPrefix]
-            public static bool ActivatePatch(CallTriggerNode __instance, List<LJOOJBCCAOF> ____callbacks, ref bool ___dirty, ref bool ___hasParam, LJOOJBCCAOF ___nameCallback, LJOOJBCCAOF ___value1Callback, LJOOJBCCAOF ___value2Callback, LJOOJBCCAOF ___value3Callback, LJOOJBCCAOF ___text1Callback, LJOOJBCCAOF ___text2Callback, LJOOJBCCAOF ___text3Callback) {
-                CKHLPKKNCBC cKHLPKKNCBC = null;
-                foreach (LJOOJBCCAOF callback in ____callbacks) {
-                    var newValue = callback.GetValue<CKHLPKKNCBC>();
-                    if(newValue != null) {
-                        cKHLPKKNCBC = newValue;
-                        break;
+            public static bool ActivatePatch(CallTriggerNode __instance,
+                                             List<HOODKEPNMHB> ___OLOOJHEPJNL,
+                                             ref bool ___LBOGANBLCDD,
+                                             ref bool ___EMDALIKOCEF,
+                                             HOODKEPNMHB ___BLKJOPOPJAB,
+                                             HOODKEPNMHB ___PNAENFDBOKF,
+                                             HOODKEPNMHB ___AALJIFAPEFE,
+                                             HOODKEPNMHB ___NEGGMGCNGEI,
+                                             HOODKEPNMHB ___CAOIDMJMGFH,
+                                             HOODKEPNMHB ___JDPONDHMPFH,
+                                             HOODKEPNMHB ___LBPLNNAMMJF) {
+                foreach (HOODKEPNMHB callback in ___OLOOJHEPJNL) {
+                    OCEONADJDLM oCEONADJDLM = callback.GetValue<OCEONADJDLM>();
+                    if (oCEONADJDLM != null) {
+                        string text = __instance.triggerName.text;
+                        if (___LBOGANBLCDD) {
+                            ___EMDALIKOCEF = text.Contains("[") || text.Contains("{") || text.Contains("<");
+                            ___LBOGANBLCDD = false;
+                        }
+                        if (___EMDALIKOCEF) {
+                            text = ParamSystemPatches.InsertParamValues(text, oCEONADJDLM);
+                        }
+                        if (___BLKJOPOPJAB != null) {
+                            var obj = ___BLKJOPOPJAB.GetValue<string>();
+                            if (obj != null) {
+                                text = obj;
+                            }
+                        } else if (__instance.callTime.value == 1) {
+                            var cacheComponent = __instance.GetComponent<CacheActionComponent>();
+                            OCEONADJDLM obj = new OCEONADJDLM() {
+                                Type = 0,
+                                Value = text,
+                                Parameter1 = ___PNAENFDBOKF?.GetValue<int>() ?? 0,
+                                Parameter2 = ___AALJIFAPEFE?.GetValue<int>() ?? 0,
+                                Parameter3 = ___NEGGMGCNGEI?.GetValue<int>() ?? 0,
+                                Message = ___CAOIDMJMGFH?.GetValue<string>() ?? "",
+                                Message2 = ___JDPONDHMPFH?.GetValue<string>() ?? "",
+                                Message3 = ___LBPLNNAMMJF?.GetValue<string>() ?? ""
+                            };
+                            cacheComponent.value.Invoke(obj);
+                            cacheComponent.value.Invoke(null);
+                            return false;
+                        }
+                        TriggerSystem.LAEDKDAOFEP lAEDKDAOFEP = new TriggerSystem.LAEDKDAOFEP() {
+                            triggerName = text,
+                            value1 = ___PNAENFDBOKF?.GetValue<int>() ?? 0,
+                            value2 = ___AALJIFAPEFE?.GetValue<int>() ?? 0,
+                            value3 = ___NEGGMGCNGEI?.GetValue<int>() ?? 0,
+                            text1 = ___CAOIDMJMGFH?.GetValue<string>() ?? "",
+                            text2 = ___JDPONDHMPFH?.GetValue<string>() ?? "",
+                            text3 = ___LBPLNNAMMJF?.GetValue<string>() ?? ""
+                        };
+                        switch (__instance.callTime.value) {
+                            case 0:
+                                TriggerSystem.getInstance().AddTriggerItem(lAEDKDAOFEP);
+                                break;
+                            case 1:
+                                TriggerSystem.getInstance().CallTrigger(lAEDKDAOFEP);
+                                break;
+                        }
+                        return false;
                     }
-                }
-                if (cKHLPKKNCBC == null) {
-                    return false;
-                }
-                string text = __instance.triggerName.text;
-                if (___dirty) {
-                    ___hasParam = text.Contains("[") || text.Contains("{") || text.Contains("<");
-                    ___dirty = false;
-                }
-                if (___hasParam) {
-                    text = ParamSystemPatches.InsertParamValues(text, cKHLPKKNCBC);
-                }
-                if (___nameCallback != null) {
-                    var obj = ___nameCallback.GetValue<string>();
-                    if (obj != null) {
-                        text = obj;
-                    }
-                } else if (__instance.callTime.value == 1) {
-                    var cacheComponent = __instance.GetComponent<CacheActionComponent>();
-                    CKHLPKKNCBC obj = new CKHLPKKNCBC() {
-                        Type = 0,
-                        Value = text,
-                        Parameter1 = ___value1Callback?.GetValue<int>() ?? 0,
-                        Parameter2 = ___value2Callback?.GetValue<int>() ?? 0,
-                        Parameter3 = ___value3Callback?.GetValue<int>() ?? 0,
-                        Message =  ___text1Callback?.GetValue<string>() ?? "",
-                        Message2 = ___text2Callback?.GetValue<string>() ?? "",
-                        Message3 = ___text3Callback?.GetValue<string>() ?? ""
-                    };
-                    cacheComponent.value.Invoke(obj);
-                    cacheComponent.value.Invoke(null);
-                    return false;
-                }
-                TriggerSystem.AIAOHOLGDOE aIAOHOLGDOE = new TriggerSystem.AIAOHOLGDOE() {
-                    triggerName = text,
-                    value1 = ___value1Callback?.GetValue<int>() ?? 0,
-                    value2 = ___value2Callback?.GetValue<int>() ?? 0,
-                    value3 = ___value3Callback?.GetValue<int>() ?? 0,
-                    text1 = ___text1Callback?.GetValue<string>() ?? "",
-                    text2 = ___text2Callback?.GetValue<string>() ?? "",
-                    text3 = ___text3Callback?.GetValue<string>() ?? ""
-                };
-                switch (__instance.callTime.value) {
-                    case 0:
-                        TriggerSystem.getInstance().AddTriggerItem(aIAOHOLGDOE);
-                        break;
-                    case 1:
-                        TriggerSystem.getInstance().CallTrigger(aIAOHOLGDOE);
-                        break;
                 }
                 return false;
             }
@@ -151,37 +159,37 @@ namespace APE {
         public static class TriggerSystemPatches {
             [HarmonyPatch(nameof(TriggerSystem.CallTrigger))]
             [HarmonyPrefix]
-            public static bool CallTriggerHook(TriggerSystem __instance, TriggerSystem.AIAOHOLGDOE OFGNEEGAFFM) {
-                if (TriggerChannels.TryGetValue(OFGNEEGAFFM.triggerName, out var OnTrigger)) {
-                    OnTrigger.Invoke(new CKHLPKKNCBC() {
+            public static bool CallTriggerHook(TriggerSystem __instance, TriggerSystem.LAEDKDAOFEP EDNJHABGGKD) {
+                if (TriggerChannels.TryGetValue(EDNJHABGGKD.triggerName, out var OnTrigger)) {
+                    OnTrigger.Invoke(new OCEONADJDLM() {
                         Type = 0,
-                        Value = OFGNEEGAFFM.triggerName,
-                        Parameter1 = OFGNEEGAFFM.value1,
-                        Parameter2 = OFGNEEGAFFM.value2,
-                        Parameter3 = OFGNEEGAFFM.value3,
-                        Message = OFGNEEGAFFM.text1,
-                        Message2 = OFGNEEGAFFM.text2,
-                        Message3 = OFGNEEGAFFM.text3
+                        Value = EDNJHABGGKD.triggerName,
+                        Parameter1 = EDNJHABGGKD.value1,
+                        Parameter2 = EDNJHABGGKD.value2,
+                        Parameter3 = EDNJHABGGKD.value3,
+                        Message = EDNJHABGGKD.text1,
+                        Message2 = EDNJHABGGKD.text2,
+                        Message3 = EDNJHABGGKD.text3
                     });
                     OnTrigger.Invoke(null);
                 }
                 foreach (ITriggerHandler interfaceTrigger in __instance.interfaceTriggers) {
-                    interfaceTrigger?.triggerCalled(OFGNEEGAFFM.triggerName);
+                    interfaceTrigger?.triggerCalled(EDNJHABGGKD.triggerName);
                 }
                 return false;
             }
         }
         [HarmonyPatch(typeof(SplitTParamNode))]
         public static class SplitTParamNodePatches {
-            [HarmonyPatch("IHCGBFELBLL")]
+            [HarmonyPatch("OBHKFAJCAIJ")]
             [HarmonyPrefix]
-            public static bool ActivatePatch(SplitTParamNode __instance, List<LJOOJBCCAOF> ____callbacks, LJOOJBCCAOF ___textCallback, LJOOJBCCAOF ___delimCallback, LJOOJBCCAOF ___arrayCallback) {
-                foreach (LJOOJBCCAOF callback in ____callbacks) {
-                    CKHLPKKNCBC cKHLPKKNCBC = callback.GetValue<CKHLPKKNCBC>();
-                    if (cKHLPKKNCBC != null) {
-                        string inputText = ___textCallback?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.inputText.text, cKHLPKKNCBC);
-                        string delimiter = ___delimCallback?.GetValue<string>() ?? __instance.delimeter.text;
-                        if (___arrayCallback == null) {
+            public static bool ActivatePatch(SplitTParamNode __instance, List<HOODKEPNMHB> ___OLOOJHEPJNL, HOODKEPNMHB ___AONBCPCEOLI, HOODKEPNMHB ___NKIMACBBNDJ, HOODKEPNMHB ___EPHLEHONCHF) {
+                foreach (HOODKEPNMHB callback in ___OLOOJHEPJNL) {
+                    OCEONADJDLM oCEONADJDLM = callback.GetValue<OCEONADJDLM>();
+                    if (oCEONADJDLM != null) {
+                        string inputText = ___AONBCPCEOLI?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.inputText.text, oCEONADJDLM);
+                        string delimiter = ___NKIMACBBNDJ?.GetValue<string>() ?? __instance.delimeter.text;
+                        if (___EPHLEHONCHF == null) {
                             var cacheComponent = __instance.GetComponent<CacheArrayComponent>();
                             string[] array = inputText.Split(new[] { delimiter }, StringSplitOptions.None);
                             cacheComponent.value.Clear();
@@ -189,7 +197,7 @@ namespace APE {
                                 cacheComponent.value.AddRange(array);
                             }
                         } else {
-                            string arrayName = ___arrayCallback?.GetValue<string>() ?? __instance.arrayName.text;
+                            string arrayName = ___EPHLEHONCHF?.GetValue<string>() ?? __instance.arrayName.text;
                             string[] array = inputText.Split(new[] { delimiter }, StringSplitOptions.None);
                             if (TArrayParams.TryGetValue(arrayName, out List<string> list)) {
                                 list.Clear();
@@ -226,9 +234,9 @@ namespace APE {
         public static class TArrayValueNodePatches {
             [HarmonyPatch(nameof(TArrayValueNode.UpdateValueSockets))]
             [HarmonyPrefix]
-            public static bool UpdateValueSocketsIntercept(TArrayValueNode __instance, LJOOJBCCAOF ___arrayCallback, LJOOJBCCAOF ___indexCallback) {
-                int index = ___indexCallback?.GetValue<int>() ?? (int.TryParse(ParamSystemPatches.InsertParamValues(__instance.indexField.text), out int result) ? result : 0);
-                if (___arrayCallback == null) {
+            public static bool UpdateValueSocketsIntercept(TArrayValueNode __instance, HOODKEPNMHB ___EPHLEHONCHF, HOODKEPNMHB ___FEHLMIBCLIP) {
+                int index = ___FEHLMIBCLIP?.GetValue<int>() ?? (int.TryParse(ParamSystemPatches.InsertParamValues(__instance.indexField.text), out int result) ? result : 0);
+                if (___EPHLEHONCHF == null) {
                     if (index < 0) {
                         __instance.textOutput.SetValue("");
                         return false;
@@ -241,7 +249,7 @@ namespace APE {
                     __instance.textOutput.SetValue(cacheComponent.value[index]);
                     return false;
                 }
-                __instance.textOutput.SetValue(ParamSystem.getInstance().GetValueStringArray(___arrayCallback.GetValue<string>() ?? __instance.arrayField.text, index));
+                __instance.textOutput.SetValue(ParamSystem.getInstance().GetValueStringArray(___EPHLEHONCHF.GetValue<string>() ?? __instance.arrayField.text, index));
                 return false;
             }
             [HarmonyPatch(nameof(TArrayValueNode.Setup))]
@@ -265,29 +273,29 @@ namespace APE {
         }
         [HarmonyPatch(typeof(SetTArrayNode))]
         public static class SetTArrayNodePatches {
-            [HarmonyPatch("IHCGBFELBLL")]
+            [HarmonyPatch("OBHKFAJCAIJ")]
             [HarmonyPrefix]
-            public static bool ActivatePatch(SetTArrayNode __instance, LJOOJBCCAOF ___nameCallback, LJOOJBCCAOF ___indexCallback, LJOOJBCCAOF ___valueCallback, List<LJOOJBCCAOF> ____callbacks) {
-                CKHLPKKNCBC cKHLPKKNCBC = null;
-                foreach (LJOOJBCCAOF callback in ____callbacks) {
-                    if (callback.GetValue<CKHLPKKNCBC>() != null) {
-                        cKHLPKKNCBC = callback.GetValue<CKHLPKKNCBC>();
+            public static bool ActivatePatch(SetTArrayNode __instance, HOODKEPNMHB ___BLKJOPOPJAB, HOODKEPNMHB ___FEHLMIBCLIP, HOODKEPNMHB ___LAFHOALCHFL, List<HOODKEPNMHB> ___OLOOJHEPJNL) {
+                OCEONADJDLM cKHLPKKNCBC = null;
+                foreach (HOODKEPNMHB callback in ___OLOOJHEPJNL) {
+                    if (callback.GetValue<OCEONADJDLM>() != null) {
+                        cKHLPKKNCBC = callback.GetValue<OCEONADJDLM>();
                         break;
                     }
                 }
                 if (cKHLPKKNCBC != null) {
-                    int inputSocketValue = ___indexCallback?.GetValue<int>() ?? ParamSystem.GetIntValueFromString(__instance.indexValue.text, -1, cKHLPKKNCBC);
-                    if(___nameCallback == null) {
-                        if(__instance.arrayName.text.Length > 0 && inputSocketValue >= 0) {
+                    int inputSocketValue = ___FEHLMIBCLIP?.GetValue<int>() ?? ParamSystem.GetIntValueFromString(__instance.indexValue.text, -1, cKHLPKKNCBC);
+                    if (___BLKJOPOPJAB == null) {
+                        if (__instance.arrayName.text.Length > 0 && inputSocketValue >= 0) {
                             var cacheComponent = __instance.GetComponent<CacheArrayComponent>();
-                            if(inputSocketValue < cacheComponent.value.Count) {
-                                cacheComponent.value[inputSocketValue] = ___valueCallback?.GetValue<string>() ?? ParamSystem.getInstance().InsertParamValues(__instance.paramValue.text, cKHLPKKNCBC);
+                            if (inputSocketValue < cacheComponent.value.Count) {
+                                cacheComponent.value[inputSocketValue] = ___LAFHOALCHFL?.GetValue<string>() ?? ParamSystem.getInstance().InsertParamValues(__instance.paramValue.text, cKHLPKKNCBC);
                             }
                         }
                     } else {
-                        string inputSocketValue2 = ___nameCallback.GetValue<string>() ?? __instance.arrayName.text;
+                        string inputSocketValue2 = ___BLKJOPOPJAB.GetValue<string>() ?? __instance.arrayName.text;
                         if (inputSocketValue2.Length > 0 && inputSocketValue >= 0) {
-                            string inputSocketValue3 = ___valueCallback?.GetValue<string>() ?? ParamSystem.getInstance().InsertParamValues(__instance.paramValue.text, cKHLPKKNCBC);
+                            string inputSocketValue3 = ___LAFHOALCHFL?.GetValue<string>() ?? ParamSystem.getInstance().InsertParamValues(__instance.paramValue.text, cKHLPKKNCBC);
                             ParamSystem.getInstance().SetValueStringArray(inputSocketValue2, inputSocketValue, inputSocketValue3);
                         }
                     }
@@ -317,15 +325,15 @@ namespace APE {
         public static class DictionaryValueNodePatches {
             [HarmonyPatch(nameof(DictionaryValueNode.UpdateValueSockets))]
             [HarmonyPrefix]
-            public static bool UpdateValueSocketsIntercept(DictionaryValueNode __instance, LJOOJBCCAOF ___dictCallback, LJOOJBCCAOF ___arrayCallback, LJOOJBCCAOF ___keyCallback) {
-                Dictionary<string, string> inputSocketValue = ___dictCallback?.GetValue<Dictionary<string, string>>();
+            public static bool UpdateValueSocketsIntercept(DictionaryValueNode __instance, HOODKEPNMHB ___NFEDJNPPPMG, HOODKEPNMHB ___EPHLEHONCHF, HOODKEPNMHB ___MDMENHPPGCA) {
+                Dictionary<string, string> inputSocketValue = ___NFEDJNPPPMG?.GetValue<Dictionary<string, string>>();
                 // If we have no forced dictionary
                 if (inputSocketValue == null) {
                     // If there is no incoming name callback
-                    if (___arrayCallback == null) {
+                    if (___EPHLEHONCHF == null) {
                         // Grab the cache component
                         var cacheComponent = __instance.GetComponent<CacheDictionaryComponent>();
-                        string inputSocketValue3 = ___keyCallback?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.keyField.text);
+                        string inputSocketValue3 = ___MDMENHPPGCA?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.keyField.text);
                         // If there is a param in the string, we are sad, because we cannot cache efficiently.
                         if (cacheComponent.hasparam) {
                             string inputSocketValue2 = ParamSystemPatches.InsertParamValues(__instance.arrayField.text);
@@ -334,12 +342,12 @@ namespace APE {
                             __instance.textOutput.SetValue(cacheComponent.value[inputSocketValue3.ToLower()]);
                         }
                     } else {
-                        string inputSocketValue2 = ___arrayCallback?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.arrayField.text);
-                        string inputSocketValue3 = ___keyCallback?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.keyField.text);
+                        string inputSocketValue2 = ___EPHLEHONCHF?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.arrayField.text);
+                        string inputSocketValue3 = ___MDMENHPPGCA?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.keyField.text);
                         __instance.textOutput.SetValue(ParamSystem.getInstance().GetDictionaryValue(inputSocketValue2, inputSocketValue3.ToLower()));
                     }
                 } else {
-                    string inputSocketValue4 = ___keyCallback?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.keyField.text);
+                    string inputSocketValue4 = ___MDMENHPPGCA?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.keyField.text);
                     __instance.textOutput.SetValue(inputSocketValue.TryGetValue(inputSocketValue4, out var value) ? value : null);
                 }
                 return false;
@@ -369,10 +377,10 @@ namespace APE {
         public static class TextSubstringNodePatches {
             [HarmonyPatch(nameof(TextSubstringNode.UpdateValueSockets))]
             [HarmonyPrefix]
-            public static bool UpdateValueSocketsHook(TextSubstringNode __instance, LJOOJBCCAOF ___textCallback, LJOOJBCCAOF ___indexCallback, LJOOJBCCAOF ___lengthCallback) {
-                string inputSocketValue = ___textCallback?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.textField.text);
-                int inputSocketValue2 = ___indexCallback?.GetValue<int>() ?? ParamSystemPatches.GetIntValueFromString(__instance.indexField.text);
-                int inputSocketValue3 = ___lengthCallback?.GetValue<int>() ?? ParamSystemPatches.GetIntValueFromString(__instance.lengthField.text);
+            public static bool UpdateValueSocketsHook(TextSubstringNode __instance, HOODKEPNMHB ___AONBCPCEOLI, HOODKEPNMHB ___FEHLMIBCLIP, HOODKEPNMHB ___GHOOKJHAGEB) {
+                string inputSocketValue = ___AONBCPCEOLI?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.textField.text);
+                int inputSocketValue2 = ___FEHLMIBCLIP?.GetValue<int>() ?? ParamSystemPatches.GetIntValueFromString(__instance.indexField.text);
+                int inputSocketValue3 = ___GHOOKJHAGEB?.GetValue<int>() ?? ParamSystemPatches.GetIntValueFromString(__instance.lengthField.text);
                 try {
                     if (inputSocketValue2 >= 0 && inputSocketValue2 < inputSocketValue.Length) {
                         if (inputSocketValue3 > 0 && inputSocketValue2 + inputSocketValue3 <= inputSocketValue.Length) {
@@ -401,99 +409,105 @@ namespace APE {
             public static readonly Regex PARAM1_REGEX = new Regex(@"\[message\]", RegexOptions.Compiled);
             public static readonly Regex PARAM2_REGEX = new Regex(@"\[message2\]", RegexOptions.Compiled);
             public static readonly Regex PARAM3_REGEX = new Regex(@"\[message3\]", RegexOptions.Compiled);
-            public static readonly Regex NUM_PARAM_REGEX = new Regex(@"\[([^][><]+)\]", RegexOptions.Compiled);
-            public static readonly Regex TIM_PARAM_REGEX = new Regex(@"\{([^}]+)\}", RegexOptions.Compiled);
+            public static readonly Regex NUM_PARAM_REGEX = new Regex(@"\[([^][></]+)\]", RegexOptions.Compiled);
+            public static readonly Regex STR_PARAM_REGEX = new Regex(@"<([^][>/]+)>", RegexOptions.Compiled);
+            public static readonly Regex TIM_PARAM_REGEX = new Regex(@"\{([^}/]+)\}", RegexOptions.Compiled);
             public static string MyReplaceStr(string KGEIAJAADDD, string PLMOGMPOCCL, string NHHOCGKIPDM) {
                 return Regex.Replace(KGEIAJAADDD, Regex.Escape(PLMOGMPOCCL), NHHOCGKIPDM.Replace("$", "$$"), RegexOptions.IgnoreCase);
             }
             [HarmonyPatch(nameof(ParamSystem.GetIntValueFromString))]
             [HarmonyPrefix]
-            public static bool GetIntValueHook(ref int __result, string IDBCBCHDGJA, int HMKBFKLOIIB, CKHLPKKNCBC JOJBALNDGJL) {
+            public static bool GetIntValueHook(ref int __result, string BFDBBGCABBF, int IJLJJCELKMM, OCEONADJDLM COHHGHFNJCM) {
                 // var LOWER = IDBCBCHDGJA.ToLower()
-                var LABI = IDBCBCHDGJA.IndexOf('<');
-                if (LABI > -1 && IDBCBCHDGJA.IndexOf('>', LABI) > -1) {
-                    var LOWER = IDBCBCHDGJA.ToLower();
-                    if ((LOWER == "<message>" || IDBCBCHDGJA.ToLower() == "<message2>" || IDBCBCHDGJA.ToLower() == "<message3>") && JOJBALNDGJL != null && int.TryParse(IDBCBCHDGJA, out var result)) {
+                var LABI = BFDBBGCABBF.IndexOf('<');
+                if (LABI > -1 && BFDBBGCABBF.IndexOf('>', LABI) > -1) {
+                    var LOWER = BFDBBGCABBF.ToLower();
+                    if ((LOWER == "<message>" || BFDBBGCABBF.ToLower() == "<message2>" || BFDBBGCABBF.ToLower() == "<message3>") && COHHGHFNJCM != null && int.TryParse(BFDBBGCABBF, out var result)) {
                         __result = result;
                         return false;
                     }
-                    string kPBPEDKDCKF = IDBCBCHDGJA.Replace("<", "").Replace(">", "");
-                    kPBPEDKDCKF = ParamSystem.getInstance().GetParamString(kPBPEDKDCKF, IDBCBCHDGJA);
-                    IDBCBCHDGJA = kPBPEDKDCKF;
+                    string kPBPEDKDCKF = BFDBBGCABBF.Replace("<", "").Replace(">", "");
+                    kPBPEDKDCKF = ParamSystem.getInstance().GetParamString(kPBPEDKDCKF, BFDBBGCABBF);
+                    BFDBBGCABBF = kPBPEDKDCKF;
                 }
-                if (IDBCBCHDGJA.IndexOf('[') > -1) {
-                    if (IDBCBCHDGJA.ToLower() == "[message]" && JOJBALNDGJL != null) {
-                        __result = JOJBALNDGJL.Parameter1;
+                if (BFDBBGCABBF.IndexOf('[') > -1) {
+                    if (BFDBBGCABBF.ToLower() == "[message]" && COHHGHFNJCM != null) {
+                        __result = COHHGHFNJCM.Parameter1;
                         return false;
                     }
-                    if (IDBCBCHDGJA.ToLower() == "[message2]" && JOJBALNDGJL != null) {
-                        __result = JOJBALNDGJL.Parameter2;
+                    if (BFDBBGCABBF.ToLower() == "[message2]" && COHHGHFNJCM != null) {
+                        __result = COHHGHFNJCM.Parameter2;
                         return false;
                     }
-                    if (IDBCBCHDGJA.ToLower() == "[message3]" && JOJBALNDGJL != null) {
-                        __result = JOJBALNDGJL.Parameter3;
+                    if (BFDBBGCABBF.ToLower() == "[message3]" && COHHGHFNJCM != null) {
+                        __result = COHHGHFNJCM.Parameter3;
                         return false;
                     }
-                    if (IDBCBCHDGJA.ToLower() == "[heartrate]") {
+                    if (BFDBBGCABBF.ToLower() == "[heartrate]") {
                         __result = PulsoidOAuth.HeartRate;
                         return false;
                     }
-                    string kPBPEDKDCKF2 = IDBCBCHDGJA.Replace("[", "").Replace("]", "");
-                    __result = ParamSystem.getInstance().GetParamInt(kPBPEDKDCKF2, HMKBFKLOIIB);
+                    string kPBPEDKDCKF2 = BFDBBGCABBF.Replace("[", "").Replace("]", "");
+                    __result = ParamSystem.getInstance().GetParamInt(kPBPEDKDCKF2, IJLJJCELKMM);
                     return false;
                 }
-                if (IDBCBCHDGJA.IndexOf('{') > -1) {
-                    string eDENLIIBBAP = IDBCBCHDGJA.Replace("{", "").Replace("}", "");
+                if (BFDBBGCABBF.IndexOf('{') > -1) {
+                    string eDENLIIBBAP = BFDBBGCABBF.Replace("{", "").Replace("}", "");
                     __result = TimerSystem.getInstance().GetTimerLeft(eDENLIIBBAP);
                     return false;
                 }
-                if (int.TryParse(IDBCBCHDGJA, out var result2)) {
+                if (int.TryParse(BFDBBGCABBF, out var result2)) {
                     __result = result2;
                     return false;
                 }
-                __result = HMKBFKLOIIB;
+                __result = IJLJJCELKMM;
                 return false;
             }
-            public static int GetIntValueFromString(string IDBCBCHDGJA, int HMKBFKLOIIB = 0, CKHLPKKNCBC JOJBALNDGJL = null) {
+            public static int GetIntValueFromString(string IDBCBCHDGJA, int HMKBFKLOIIB = 0, OCEONADJDLM JOJBALNDGJL = null) {
                 int result = 0;
                 GetIntValueHook(ref result, IDBCBCHDGJA, HMKBFKLOIIB, JOJBALNDGJL);
                 return result;
             }
             [HarmonyPatch(nameof(ParamSystem.InsertParamValues))]
             [HarmonyPrefix]
-            public static bool InsertParamValuesHook(ref string __result, string IAHIDDKBEMH, CKHLPKKNCBC JOJBALNDGJL) {
+            public static bool InsertParamValuesHook(ref string __result, string JJDKOGKFAAA, OCEONADJDLM COHHGHFNJCM) {
                 // Parameters can't be made with an empty string name, so the string we are inserting must be at least 3 long.
-                if (IAHIDDKBEMH.Length < 3 || !PARAM_TEST_REGEX.IsMatch(IAHIDDKBEMH)) {
-                    __result = IAHIDDKBEMH;
+                if (JJDKOGKFAAA.Length < 3 || !PARAM_TEST_REGEX.IsMatch(JJDKOGKFAAA)) {
+                    __result = JJDKOGKFAAA;
                     return false;
                 }
-                IAHIDDKBEMH = HEARTRATE_REGEX.Replace(IAHIDDKBEMH, PulsoidOAuth.HeartRate.ToString() ?? "");
-                IAHIDDKBEMH = HEARTPERC_REGEX.Replace(IAHIDDKBEMH, Mathf.Clamp(((float)PulsoidOAuth.HeartRate - 30f) / 270f, 0f, 1f).ToString() ?? "");
-                if (JOJBALNDGJL != null) {
-                    IAHIDDKBEMH = USERNAME_REGEX.Replace(IAHIDDKBEMH, JOJBALNDGJL.UserName ?? "");
-                    IAHIDDKBEMH = MESSAGE1_SREGEX.Replace(IAHIDDKBEMH, JOJBALNDGJL.Message ?? "");
-                    IAHIDDKBEMH = MESSAGE2_SREGEX.Replace(IAHIDDKBEMH, JOJBALNDGJL.Message2 ?? "");
-                    IAHIDDKBEMH = MESSAGE3_SREGEX.Replace(IAHIDDKBEMH, JOJBALNDGJL.Message3 ?? "");
-                    IAHIDDKBEMH = PARAM1_REGEX.Replace(IAHIDDKBEMH, JOJBALNDGJL.Parameter1.ToString() ?? "");
-                    IAHIDDKBEMH = PARAM2_REGEX.Replace(IAHIDDKBEMH, JOJBALNDGJL.Parameter2.ToString() ?? "");
-                    IAHIDDKBEMH = PARAM3_REGEX.Replace(IAHIDDKBEMH, JOJBALNDGJL.Parameter3.ToString() ?? "");
+                bool containsSquares = JJDKOGKFAAA.Contains('[') && JJDKOGKFAAA.Contains(']');
+                bool containsAngles = JJDKOGKFAAA.Contains('<') && JJDKOGKFAAA.Contains('>');
+                bool containsCurlies = JJDKOGKFAAA.Contains('{') && JJDKOGKFAAA.Contains('}');
+                JJDKOGKFAAA = HEARTRATE_REGEX.Replace(JJDKOGKFAAA, PulsoidOAuth.HeartRate.ToString() ?? "");
+                JJDKOGKFAAA = HEARTPERC_REGEX.Replace(JJDKOGKFAAA, Mathf.Clamp(((float)PulsoidOAuth.HeartRate - 30f) / 270f, 0f, 1f).ToString() ?? "");
+                if (COHHGHFNJCM != null) {
+                    if (containsAngles) {
+                        JJDKOGKFAAA = USERNAME_REGEX.Replace(JJDKOGKFAAA, COHHGHFNJCM.UserName ?? "");
+                        JJDKOGKFAAA = MESSAGE1_SREGEX.Replace(JJDKOGKFAAA, COHHGHFNJCM.Message ?? "");
+                        JJDKOGKFAAA = MESSAGE2_SREGEX.Replace(JJDKOGKFAAA, COHHGHFNJCM.Message2 ?? "");
+                        JJDKOGKFAAA = MESSAGE3_SREGEX.Replace(JJDKOGKFAAA, COHHGHFNJCM.Message3 ?? "");
+                    }
+                    if (containsSquares) {
+                        JJDKOGKFAAA = PARAM1_REGEX.Replace(JJDKOGKFAAA, COHHGHFNJCM.Parameter1.ToString() ?? "");
+                        JJDKOGKFAAA = PARAM2_REGEX.Replace(JJDKOGKFAAA, COHHGHFNJCM.Parameter2.ToString() ?? "");
+                        JJDKOGKFAAA = PARAM3_REGEX.Replace(JJDKOGKFAAA, COHHGHFNJCM.Parameter3.ToString() ?? "");
+                    }
                 }
-                if(IAHIDDKBEMH.Contains('[') && IAHIDDKBEMH.Contains(']')) {
-                    IAHIDDKBEMH = NUM_PARAM_REGEX.Replace(IAHIDDKBEMH, (match) => {
+                if (containsSquares) {
+                    JJDKOGKFAAA = NUM_PARAM_REGEX.Replace(JJDKOGKFAAA, (match) => {
                         return NumParams.TryGetValue(match.Groups[1].Value, out var replace) ? replace.ToString(CultureInfo.InvariantCulture) : match.Value;
                     });
                 }
-                foreach (string key2 in StringParams.Keys) {
-                    if (!IAHIDDKBEMH.Contains("<")) {
-                        break;
-                    }
-                    IAHIDDKBEMH = MyReplaceStr(IAHIDDKBEMH, "<" + key2 + ">", (StringParams[key2] ?? "") ?? "");
+                if(containsAngles) {
+                    JJDKOGKFAAA = STR_PARAM_REGEX.Replace(JJDKOGKFAAA, (match) => {
+                        return StringParams.TryGetValue(match.Groups[1].Value, out var replace) ? replace : match.Value;
+                    });
                 }
-                if (IAHIDDKBEMH.Contains('{') && IAHIDDKBEMH.Contains('}')) {
-                    var timerSystem = TimerSystem.getInstance();
+                if (containsCurlies) {
                     var now = DateTime.Now;
-                    IAHIDDKBEMH = TIM_PARAM_REGEX.Replace(IAHIDDKBEMH, (match) => {
-                        if (timerSystem.timers.TryGetValue(match.Groups[1].Value, out var timer)) {
+                    JJDKOGKFAAA = TIM_PARAM_REGEX.Replace(JJDKOGKFAAA, (match) => {
+                        if (Timers.TryGetValue(match.Groups[1].Value, out var timer)) {
                             int num = timer.MSeconds - (int)now.Subtract(timer.startTime).TotalMilliseconds;
                             if (num < 0) {
                                 return "0";
@@ -503,10 +517,10 @@ namespace APE {
                         return match.Value;
                     });
                 }
-                __result = IAHIDDKBEMH;
+                __result = JJDKOGKFAAA;
                 return false;
             }
-            public static string InsertParamValues(string IAHIDDKBEMH, CKHLPKKNCBC JOJBALNDGJL = null) {
+            public static string InsertParamValues(string IAHIDDKBEMH, OCEONADJDLM JOJBALNDGJL = null) {
                 string result = IAHIDDKBEMH;
                 InsertParamValuesHook(ref result, IAHIDDKBEMH, JOJBALNDGJL);
                 return result;
@@ -514,37 +528,37 @@ namespace APE {
 
             [HarmonyPatch(nameof(ParamSystem.GetParamFloat))]
             [HarmonyPrefix]
-            public static bool GetParamFloatHook(ref float __result, string KPBPEDKDCKF, float HMKBFKLOIIB, Dictionary<string, float> ___paramInt) {
-                KPBPEDKDCKF = KPBPEDKDCKF.Replace('[', '\0').Replace(']', '\0');
-                if (___paramInt.TryGetValue(KPBPEDKDCKF, out var value)) {
+            public static bool GetParamFloatHook(ref float __result, string EOLDCDAMKFP, float IJLJJCELKMM) {
+                EOLDCDAMKFP = EOLDCDAMKFP.Replace('[', '\0').Replace(']', '\0');
+                if (NumParams.TryGetValue(EOLDCDAMKFP, out var value)) {
                     __result = value;
                     return false;
                 }
-                __result = HMKBFKLOIIB;
+                __result = IJLJJCELKMM;
                 return false;
             }
 
             [HarmonyPatch(nameof(ParamSystem.JsonToDictionary))]
             [HarmonyPrefix]
-            public static bool JsonHook(string ODMMGJAPFBM, string FHJBCAMKHAP) {
-                if (DictionaryParams.TryGetValue(ODMMGJAPFBM, out var dict)) {
+            public static bool JsonHook(string LNKGPHJDJJP, string AGBOMCDAKMN) {
+                if (DictionaryParams.TryGetValue(LNKGPHJDJJP, out var dict)) {
                     dict.Clear();
-                    JsonConvert.PopulateObject(FHJBCAMKHAP, dict);
+                    JsonConvert.PopulateObject(AGBOMCDAKMN, dict);
                 } else {
-                    DictionaryParams.Add(ODMMGJAPFBM, JsonConvert.DeserializeObject<Dictionary<string, string>>(FHJBCAMKHAP));
+                    DictionaryParams.Add(LNKGPHJDJJP, JsonConvert.DeserializeObject<Dictionary<string, string>>(AGBOMCDAKMN));
                 }
                 return false;
             }
 
             [HarmonyPatch(nameof(ParamSystem.UnpackDictionary))]
             [HarmonyPrefix]
-            public static bool UnpackHook(string ODMMGJAPFBM, string DJNHNIPKNGD) {
-                DJNHNIPKNGD = ParamSystem.Base64Decode(DJNHNIPKNGD);
-                if (DictionaryParams.TryGetValue(ODMMGJAPFBM, out Dictionary<string, string> dict)) {
+            public static bool UnpackHook(string LNKGPHJDJJP, string ENJPFFGDGFN) {
+                ENJPFFGDGFN = ParamSystem.Base64Decode(ENJPFFGDGFN);
+                if (DictionaryParams.TryGetValue(LNKGPHJDJJP, out Dictionary<string, string> dict)) {
                     dict.Clear();
-                    JsonConvert.PopulateObject(DJNHNIPKNGD, dict);
+                    JsonConvert.PopulateObject(ENJPFFGDGFN, dict);
                 } else {
-                    DictionaryParams.Add(ODMMGJAPFBM, dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(DJNHNIPKNGD));
+                    DictionaryParams.Add(LNKGPHJDJJP, dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(ENJPFFGDGFN));
                 }
                 foreach (string item in dict.Keys.ToList()) {
                     dict[item] = ParamSystem.Base64Decode(dict[item]);
@@ -554,21 +568,21 @@ namespace APE {
         }
         [HarmonyPatch(typeof(UnpackDictionaryNode))]
         public static class UnpackDictionaryNodePatches {
-            [HarmonyPatch("IHCGBFELBLL")]
+            [HarmonyPatch("OBHKFAJCAIJ")]
             [HarmonyPrefix]
-            public static bool ActivateHook(UnpackDictionaryNode __instance, List<LJOOJBCCAOF> ____callbacks, LJOOJBCCAOF ___targetCallback, LJOOJBCCAOF ___dataCallback) {
-                CKHLPKKNCBC cKHLPKKNCBC = null;
-                foreach (LJOOJBCCAOF callback in ____callbacks) {
-                    if (callback.GetValue<CKHLPKKNCBC>() != null) {
-                        cKHLPKKNCBC = callback.GetValue<CKHLPKKNCBC>();
+            public static bool ActivateHook(UnpackDictionaryNode __instance, List<HOODKEPNMHB> ___OLOOJHEPJNL, HOODKEPNMHB ___KMLKDFDKJNB, HOODKEPNMHB ___AKDCJAECNKA) {
+                OCEONADJDLM cKHLPKKNCBC = null;
+                foreach (HOODKEPNMHB callback in ___OLOOJHEPJNL) {
+                    if (callback.GetValue<OCEONADJDLM>() != null) {
+                        cKHLPKKNCBC = callback.GetValue<OCEONADJDLM>();
                         break;
                     }
                 }
                 if (cKHLPKKNCBC != null) {
-                    if (___targetCallback == null) {
-                        string inputSocketValue2 = ___dataCallback?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.paramText.text, cKHLPKKNCBC);
+                    if (___KMLKDFDKJNB == null) {
+                        string inputSocketValue2 = ___AKDCJAECNKA?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.paramText.text, cKHLPKKNCBC);
                         if (__instance.dictionaryName.text.Length > 0 && inputSocketValue2.Length > 0) {
-                            var cacheComponent = __instance.GetComponent<CacheDictionaryComponent>(); 
+                            var cacheComponent = __instance.GetComponent<CacheDictionaryComponent>();
                             inputSocketValue2 = ParamSystem.Base64Decode(inputSocketValue2);
                             cacheComponent.value.Clear();
                             JsonConvert.PopulateObject(inputSocketValue2, cacheComponent.value);
@@ -577,8 +591,8 @@ namespace APE {
                             }
                         }
                     } else {
-                        string inputSocketValue = ___targetCallback.GetValue<string>() ?? __instance.dictionaryName.text;
-                        string inputSocketValue2 = ___dataCallback?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.paramText.text, cKHLPKKNCBC);
+                        string inputSocketValue = ___KMLKDFDKJNB.GetValue<string>() ?? __instance.dictionaryName.text;
+                        string inputSocketValue2 = ___AKDCJAECNKA?.GetValue<string>() ?? ParamSystemPatches.InsertParamValues(__instance.paramText.text, cKHLPKKNCBC);
                         if (inputSocketValue.Length > 0 && inputSocketValue2.Length > 0) {
                             ParamSystem.getInstance().UnpackDictionary(inputSocketValue.ToLower(), inputSocketValue2);
                         }

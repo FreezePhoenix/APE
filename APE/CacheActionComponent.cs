@@ -2,6 +2,6 @@
 
 namespace APE {
     internal class CacheActionComponent : MonoBehaviour {
-        public ActionWrapper<CKHLPKKNCBC> value;
+        public ActionWrapper<OCEONADJDLM> value;
     }
 }
